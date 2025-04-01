@@ -2,13 +2,13 @@ package co.touchlab.kampkit
 
 import co.touchlab.kermit.Logger
 import co.touchlab.kermit.StaticConfig
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
 
 class SqlDelightTest {
 
@@ -72,7 +72,7 @@ class SqlDelightTest {
         dbHelper.deleteAll()
 
         assertTrue(
-            dbHelper.selectAllItems().first().count() == 0,
+            dbHelper.selectAllItems().first().isEmpty(),
             "Delete All did not work"
         )
     }

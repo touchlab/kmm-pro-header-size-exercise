@@ -1,11 +1,12 @@
 package co.touchlab.kampkit
 
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import co.touchlab.kampkit.db.KaMPKitDb
+import co.touchlab.kampkit.models.BreedViewModel
 import co.touchlab.kermit.Logger
 import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.Settings
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import io.ktor.client.engine.darwin.Darwin
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
@@ -31,15 +32,14 @@ actual val platformModule = module {
 
     single { Darwin.create() }
 
-    single { BreedCallbackViewModel(get(), getWith("BreedCallbackViewModel")) }
+    single { BreedViewModel(get(), getWith("BreedViewModel")) }
 }
 
 // Access from Swift to create a logger
 @Suppress("unused")
-fun Koin.loggerWithTag(tag: String) =
-    get<Logger>(qualifier = null) { parametersOf(tag) }
+fun Koin.loggerWithTag(tag: String) = get<Logger>(qualifier = null) { parametersOf(tag) }
 
 @Suppress("unused") // Called from Swift
 object KotlinDependencies : KoinComponent {
-    fun getBreedViewModel() = getKoin().get<BreedCallbackViewModel>()
+    fun getBreedViewModel() = getKoin().get<BreedViewModel>()
 }

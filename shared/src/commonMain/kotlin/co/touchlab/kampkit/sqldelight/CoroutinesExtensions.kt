@@ -1,9 +1,9 @@
 package co.touchlab.kampkit.sqldelight
 
-import com.squareup.sqldelight.Transacter
-import com.squareup.sqldelight.TransactionWithoutReturn
-import kotlinx.coroutines.withContext
+import app.cash.sqldelight.Transacter
+import app.cash.sqldelight.TransactionWithoutReturn
 import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.withContext
 
 suspend fun Transacter.transactionWithContext(
     coroutineContext: CoroutineContext,
