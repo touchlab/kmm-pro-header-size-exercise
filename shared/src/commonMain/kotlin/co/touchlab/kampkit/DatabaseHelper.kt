@@ -15,15 +15,16 @@ import kotlinx.coroutines.flow.flowOn
 class DatabaseHelper(
     sqlDriver: SqlDriver,
     private val log: Logger,
-    private val backgroundDispatcher: CoroutineDispatcher
+    private val backgroundDispatcher: CoroutineDispatcher,
 ) {
     private val dbRef: KaMPKitDb = KaMPKitDb(sqlDriver)
 
-    fun selectAllItems(): Flow<List<Breed>> = dbRef.tableQueries
-        .selectAll()
-        .asFlow()
-        .mapToList(Dispatchers.Default)
-        .flowOn(backgroundDispatcher)
+    fun selectAllItems(): Flow<List<Breed>> =
+        dbRef.tableQueries
+            .selectAll()
+            .asFlow()
+            .mapToList(Dispatchers.Default)
+            .flowOn(backgroundDispatcher)
 
     suspend fun insertBreeds(breeds: List<String>) {
         log.d { "Inserting ${breeds.size} breeds into database" }
@@ -34,11 +35,12 @@ class DatabaseHelper(
         }
     }
 
-    fun selectById(id: Long): Flow<List<Breed>> = dbRef.tableQueries
-        .selectById(id)
-        .asFlow()
-        .mapToList(Dispatchers.Default)
-        .flowOn(backgroundDispatcher)
+    fun selectById(id: Long): Flow<List<Breed>> =
+        dbRef.tableQueries
+            .selectById(id)
+            .asFlow()
+            .mapToList(Dispatchers.Default)
+            .flowOn(backgroundDispatcher)
 
     suspend fun deleteAll() {
         log.i { "Database Cleared" }
@@ -47,7 +49,10 @@ class DatabaseHelper(
         }
     }
 
-    suspend fun updateFavorite(breedId: Long, favorite: Boolean) {
+    suspend fun updateFavorite(
+        breedId: Long,
+        favorite: Boolean,
+    ) {
         log.i { "Breed $breedId: Favorited $favorite" }
         dbRef.transactionWithContext(backgroundDispatcher) {
             dbRef.tableQueries.updateFavorite(favorite, breedId)

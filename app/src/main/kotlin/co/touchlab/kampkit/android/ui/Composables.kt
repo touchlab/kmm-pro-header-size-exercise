@@ -42,7 +42,10 @@ import co.touchlab.kermit.Logger
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen(viewModel: BreedViewModel, log: Logger) {
+fun MainScreen(
+    viewModel: BreedViewModel,
+    log: Logger,
+) {
     val dogsState by viewModel.breedState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
 
@@ -55,7 +58,7 @@ fun MainScreen(viewModel: BreedViewModel, log: Logger) {
         onRefresh = { scope.launch { viewModel.refreshBreeds() } },
         onSuccess = { data -> log.v { "View updating with ${data.size} breeds" } },
         onError = { exception -> log.e { "Displaying error: $exception" } },
-        onFavorite = { scope.launch { viewModel.updateBreedFavorite(it) } }
+        onFavorite = { scope.launch { viewModel.updateBreedFavorite(it) } },
     )
 }
 
@@ -66,11 +69,11 @@ fun MainScreenContent(
     onRefresh: () -> Unit = {},
     onSuccess: (List<Breed>) -> Unit = {},
     onError: (String) -> Unit = {},
-    onFavorite: (Breed) -> Unit = {}
+    onFavorite: (Breed) -> Unit = {},
 ) {
     Surface(
         color = MaterialTheme.colors.background,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         val refreshState = rememberPullRefreshState(dogsState.isLoading, onRefresh)
 
@@ -97,7 +100,7 @@ fun MainScreenContent(
             PullRefreshIndicator(
                 dogsState.isLoading,
                 refreshState,
-                Modifier.align(Alignment.TopCenter)
+                Modifier.align(Alignment.TopCenter),
             )
         }
     }
@@ -106,11 +109,12 @@ fun MainScreenContent(
 @Composable
 fun Empty() {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(stringResource(R.string.empty_breeds))
     }
@@ -119,23 +123,30 @@ fun Empty() {
 @Composable
 fun Error(error: String) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text = error)
     }
 }
 
 @Composable
-fun Success(successData: List<Breed>, favoriteBreed: (Breed) -> Unit) {
+fun Success(
+    successData: List<Breed>,
+    favoriteBreed: (Breed) -> Unit,
+) {
     DogList(breeds = successData, favoriteBreed)
 }
 
 @Composable
-fun DogList(breeds: List<Breed>, onItemClick: (Breed) -> Unit) {
+fun DogList(
+    breeds: List<Breed>,
+    onItemClick: (Breed) -> Unit,
+) {
     LazyColumn {
         items(breeds) { breed ->
             DogRow(breed) {
@@ -147,11 +158,14 @@ fun DogList(breeds: List<Breed>, onItemClick: (Breed) -> Unit) {
 }
 
 @Composable
-fun DogRow(breed: Breed, onClick: (Breed) -> Unit) {
+fun DogRow(
+    breed: Breed,
+    onClick: (Breed) -> Unit,
+) {
     Row(
         Modifier
             .clickable { onClick(breed) }
-            .padding(10.dp)
+            .padding(10.dp),
     ) {
         Text(breed.name, Modifier.weight(1F))
         FavoriteIcon(breed)
@@ -162,21 +176,22 @@ fun DogRow(breed: Breed, onClick: (Breed) -> Unit) {
 fun FavoriteIcon(breed: Breed) {
     Crossfade(
         targetState = !breed.favorite,
-        animationSpec = TweenSpec(
-            durationMillis = 500,
-            easing = FastOutSlowInEasing
-        ),
-        label = "CrossFadeFavoriteIcon"
+        animationSpec =
+            TweenSpec(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing,
+            ),
+        label = "CrossFadeFavoriteIcon",
     ) { fav ->
         if (fav) {
             Image(
                 painter = painterResource(id = R.drawable.ic_favorite_border_24px),
-                contentDescription = stringResource(R.string.favorite_breed, breed.name)
+                contentDescription = stringResource(R.string.favorite_breed, breed.name),
             )
         } else {
             Image(
                 painter = painterResource(id = R.drawable.ic_favorite_24px),
-                contentDescription = stringResource(R.string.unfavorite_breed, breed.name)
+                contentDescription = stringResource(R.string.unfavorite_breed, breed.name),
             )
         }
     }
@@ -186,12 +201,14 @@ fun FavoriteIcon(breed: Breed) {
 @Composable
 fun MainScreenContentPreview_Success() {
     MainScreenContent(
-        dogsState = BreedViewState.Content(
-            breeds = listOf(
-                Breed(0, "appenzeller", false),
-                Breed(1, "australian", true)
-            )
-        )
+        dogsState =
+            BreedViewState.Content(
+                breeds =
+                    listOf(
+                        Breed(0, "appenzeller", false),
+                        Breed(1, "australian", true),
+                    ),
+            ),
     )
 }
 

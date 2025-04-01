@@ -12,7 +12,6 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 class MainApp : Application() {
-
     override fun onCreate() {
         super.onCreate()
         initKoin(
@@ -22,14 +21,14 @@ class MainApp : Application() {
                 single<SharedPreferences> {
                     get<Context>().getSharedPreferences(
                         "KAMPSTARTER_SETTINGS",
-                        Context.MODE_PRIVATE
+                        Context.MODE_PRIVATE,
                     )
                 }
                 single<AppInfo> { AndroidAppInfo }
                 single {
                     { Log.i("Startup", "Hello from Android/Kotlin!") }
                 }
-            }
+            },
         )
     }
 }

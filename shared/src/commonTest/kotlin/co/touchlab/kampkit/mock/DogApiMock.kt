@@ -16,10 +16,11 @@ class DogApiMock : DogApi {
     }
 
     fun successResult(): BreedResult {
-        val map = HashMap<String, List<String>>().apply {
-            put("appenzeller", emptyList())
-            put("australian", listOf("shepherd"))
-        }
+        val map =
+            HashMap<String, List<String>>().apply {
+                put("appenzeller", emptyList())
+                put("australian", listOf("shepherd"))
+            }
         return BreedResult(map, "success")
     }
 

@@ -18,22 +18,24 @@ import platform.Foundation.NSUserDefaults
 fun initKoinIos(
     userDefaults: NSUserDefaults,
     appInfo: AppInfo,
-    doOnStartup: () -> Unit
-): KoinApplication = initKoin(
+    doOnStartup: () -> Unit,
+): KoinApplication =
+    initKoin(
+        module {
+            single<Settings> { NSUserDefaultsSettings(userDefaults) }
+            single { appInfo }
+            single { doOnStartup }
+        },
+    )
+
+actual val platformModule =
     module {
-        single<Settings> { NSUserDefaultsSettings(userDefaults) }
-        single { appInfo }
-        single { doOnStartup }
+        single<SqlDriver> { NativeSqliteDriver(KaMPKitDb.Schema, "KampkitDb") }
+
+        single { Darwin.create() }
+
+        single { BreedViewModel(get(), getWith("BreedViewModel")) }
     }
-)
-
-actual val platformModule = module {
-    single<SqlDriver> { NativeSqliteDriver(KaMPKitDb.Schema, "KampkitDb") }
-
-    single { Darwin.create() }
-
-    single { BreedViewModel(get(), getWith("BreedViewModel")) }
-}
 
 // Access from Swift to create a logger
 @Suppress("unused")

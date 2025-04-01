@@ -12,7 +12,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
 class MainActivity : ComponentActivity(), KoinComponent {
-
     private val log: Logger by injectLogger("MainActivity")
     private val viewModel: BreedViewModel by viewModel()
 
