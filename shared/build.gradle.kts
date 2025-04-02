@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
@@ -6,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.android.library)
     alias(libs.plugins.skie)
-    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -50,6 +50,7 @@ kotlin {
         it.binaries.framework {
             isStatic = false
             export(libs.touchlab.kermit.simple)
+            linkerOpts("-lsqlite3")
         }
     }
 
@@ -71,11 +72,11 @@ kotlin {
             implementation(libs.kotlinx.dateTime)
             implementation(libs.touchlab.skie.annotations)
             api(libs.touchlab.kermit)
-            implementation(project(":database"))
+            implementation(projects.database)
         }
         commonTest.dependencies {
             implementation(libs.bundles.shared.commonTest)
-            implementation(project(":database"))
+            implementation(projects.database)
         }
         androidMain.dependencies {
             implementation(libs.androidx.lifecycle.viewmodel)
@@ -83,14 +84,14 @@ kotlin {
         }
         getByName("androidUnitTest").dependencies {
             implementation(libs.bundles.shared.androidTest)
-            implementation(project(":database"))
+            implementation(projects.database)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.ios)
             api(libs.touchlab.kermit.simple)
         }
         iosTest.dependencies {
-            implementation(project(":database"))
+            implementation(projects.database)
         }
     }
 }
