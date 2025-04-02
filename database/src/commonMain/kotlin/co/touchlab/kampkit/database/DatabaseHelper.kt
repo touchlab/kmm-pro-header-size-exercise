@@ -3,9 +3,9 @@ package co.touchlab.kampkit.database
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.db.SqlDriver
+import co.touchlab.kampkit.database.sqldelight.transactionWithContext
 import co.touchlab.kampkit.db.Breed
 import co.touchlab.kampkit.db.KaMPKitDb
-import co.touchlab.kampkit.database.sqldelight.transactionWithContext
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -58,4 +58,4 @@ class DatabaseHelper(
             dbRef.tableQueries.updateFavorite(favorite, breedId)
         }
     }
-} 
+}

@@ -1,14 +1,18 @@
 package co.touchlab.kampkit.database.sqldelight
 
-import app.cash.sqldelight.db.SqlDriver
-import kotlinx.coroutines.CoroutineDispatcher
+import app.cash.sqldelight.Transacter
+import app.cash.sqldelight.TransactionWithoutReturn
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-suspend fun <T> SqlDriver.transactionWithContext(
-    dispatcher: CoroutineDispatcher,
-    block: suspend () -> T,
-): T = withContext(dispatcher) {
-    transaction {
-        block()
+suspend fun Transacter.transactionWithContext(
+    coroutineContext: CoroutineContext,
+    noEnclosing: Boolean = false,
+    body: TransactionWithoutReturn.() -> Unit,
+) {
+    withContext(coroutineContext) {
+        this@transactionWithContext.transaction(noEnclosing) {
+            body()
+        }
     }
-} 
+}

@@ -6,4 +6,4 @@ import co.touchlab.kampkit.db.KaMPKitDb
 
 internal actual fun testDbConnection(): SqlDriver {
     return inMemoryDriver(KaMPKitDb.Schema)
-} 
+}

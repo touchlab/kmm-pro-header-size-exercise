@@ -81,4 +81,4 @@ class SqlDelightTest {
                 "Delete All did not work",
             )
         }
-} 
+}

@@ -6,4 +6,4 @@ import co.touchlab.kampkit.db.KaMPKitDb
 
 internal actual fun testDbConnection(): SqlDriver =
     JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-        .also { KaMPKitDb.Schema.create(it) } 
+        .also { KaMPKitDb.Schema.create(it) }

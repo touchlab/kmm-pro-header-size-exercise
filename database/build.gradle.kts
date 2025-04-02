@@ -13,7 +13,7 @@ kotlin {
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
             baseName = "database"
@@ -39,7 +39,7 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(libs.sqlDelight.android)
+            api(libs.sqlDelight.android)
         }
 
         androidUnitTest.dependencies {
@@ -49,7 +49,7 @@ kotlin {
         }
 
         iosMain.dependencies {
-            implementation(libs.sqlDelight.native)
+            api(libs.sqlDelight.native)
         }
 
         iosTest.dependencies {
@@ -86,4 +86,4 @@ android {
         warningsAsErrors = true
         abortOnError = true
     }
-} 
+}
