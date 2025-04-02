@@ -75,6 +75,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.bundles.shared.commonTest)
+            implementation(project(":database"))
         }
         androidMain.dependencies {
             implementation(libs.androidx.lifecycle.viewmodel)
@@ -82,10 +83,14 @@ kotlin {
         }
         getByName("androidUnitTest").dependencies {
             implementation(libs.bundles.shared.androidTest)
+            implementation(project(":database"))
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.ios)
             api(libs.touchlab.kermit.simple)
+        }
+        iosTest.dependencies {
+            implementation(project(":database"))
         }
     }
 }
