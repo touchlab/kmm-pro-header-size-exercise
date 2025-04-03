@@ -61,13 +61,13 @@ kotlin {
             implementation(libs.bundles.shared.commonTest)
         }
         androidMain.dependencies {
-            implementation(libs.sqlDelight.android)
+            api(libs.sqlDelight.android)
         }
         getByName("androidUnitTest").dependencies {
             implementation(libs.bundles.shared.androidTest)
         }
         iosMain.dependencies {
-            implementation(libs.sqlDelight.native)
+            api(libs.sqlDelight.native)
             api(libs.touchlab.kermit.simple)
         }
     }
