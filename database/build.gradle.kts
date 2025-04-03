@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "co.touchlab.kampkit.touchlab"
+    namespace = "co.touchlab.kampkit.database"
     compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
