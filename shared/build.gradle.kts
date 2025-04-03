@@ -31,7 +31,7 @@ android {
 version = "1.2"
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(17)
     // https://kotlinlang.org/docs/multiplatform-expect-actual.html#expected-and-actual-classes
     // To suppress this warning about usage of expected and actual classes
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
