@@ -71,7 +71,7 @@ kotlin {
             implementation(libs.multiplatformSettings.common)
             implementation(libs.kotlinx.dateTime)
             implementation(libs.touchlab.skie.annotations)
-            api(projects.database)
+            implementation(projects.database)
             api(libs.touchlab.kermit)
         }
         commonTest.dependencies {

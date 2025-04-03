@@ -1,6 +1,5 @@
 package co.touchlab.kampkit.models
 
-import co.touchlab.kampkit.db.Breed
 import co.touchlab.kermit.Logger
 import co.touchlab.skie.configuration.annotations.DefaultArgumentInterop
 import kotlinx.coroutines.flow.MutableStateFlow
