@@ -4,7 +4,6 @@ import app.cash.turbine.ReceiveTurbine
 import app.cash.turbine.test
 import co.touchlab.kampkit.mock.ClockMock
 import co.touchlab.kampkit.mock.DogApiMock
-import co.touchlab.kampkit.models.Breed
 import co.touchlab.kampkit.models.BreedRepository
 import co.touchlab.kampkit.models.BreedViewModel
 import co.touchlab.kampkit.models.BreedViewState
@@ -26,7 +25,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.hours
 
-class BreedViewModelTest {
+internal class BreedViewModelTest {
     private var kermit = Logger(StaticConfig())
     private var testDbConnection = testDbConnection()
     private var dbHelper =

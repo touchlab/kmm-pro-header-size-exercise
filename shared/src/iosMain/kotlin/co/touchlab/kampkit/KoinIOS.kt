@@ -15,7 +15,7 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 import platform.Foundation.NSUserDefaults
 
-fun initKoinIos(
+internal fun initKoinIos(
     userDefaults: NSUserDefaults,
     appInfo: AppInfo,
     doOnStartup: () -> Unit,
@@ -28,20 +28,17 @@ fun initKoinIos(
         },
     )
 
-actual val platformModule =
+internal actual val platformModule =
     module {
-        single<SqlDriver> { NativeSqliteDriver(KaMPKitDb.Schema, "KampkitDb") }
-
         single { Darwin.create() }
-
         single { BreedViewModel(get(), getWith("BreedViewModel")) }
     }
 
 // Access from Swift to create a logger
 @Suppress("unused")
-fun Koin.loggerWithTag(tag: String) = get<Logger>(qualifier = null) { parametersOf(tag) }
+internal fun Koin.loggerWithTag(tag: String) = get<Logger>(qualifier = null) { parametersOf(tag) }
 
 @Suppress("unused") // Called from Swift
-object KotlinDependencies : KoinComponent {
+internal object KotlinDependencies : KoinComponent {
     fun getBreedViewModel() = getKoin().get<BreedViewModel>()
 }

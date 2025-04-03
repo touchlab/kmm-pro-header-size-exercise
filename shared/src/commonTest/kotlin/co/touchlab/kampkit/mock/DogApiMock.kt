@@ -4,7 +4,7 @@ import co.touchlab.kampkit.ktor.DogApi
 import co.touchlab.kampkit.response.BreedResult
 
 // TODO convert this to use Ktor's MockEngine
-class DogApiMock : DogApi {
+internal class DogApiMock : DogApi {
     private var nextResult: () -> BreedResult = { error("Uninitialized!") }
     var calledCount = 0
         private set
