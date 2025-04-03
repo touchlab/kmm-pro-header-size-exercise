@@ -30,7 +30,7 @@ jobs:
       - name: Build
         uses: sersoft-gmbh/xcodebuild-action@v3
         with:
-          project: KaMPKitiOS.xcodeproj
+          project: ios/KaMPKitiOS.xcodeproj
           scheme: KaMPKitiOS
           destination: name=iPhone 8
           sdk: iphoneos
