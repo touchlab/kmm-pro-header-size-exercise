@@ -35,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kampkit.android.R
-import co.touchlab.kampkit.models.Breed
+import co.touchlab.kampkit.db.Breed
 import co.touchlab.kampkit.models.BreedViewModel
 import co.touchlab.kampkit.models.BreedViewState
 import co.touchlab.kermit.Logger

@@ -2,6 +2,7 @@ package co.touchlab.kampkit
 
 import app.cash.turbine.ReceiveTurbine
 import app.cash.turbine.test
+import co.touchlab.kampkit.db.Breed
 import co.touchlab.kampkit.mock.ClockMock
 import co.touchlab.kampkit.mock.DogApiMock
 import co.touchlab.kampkit.models.BreedRepository

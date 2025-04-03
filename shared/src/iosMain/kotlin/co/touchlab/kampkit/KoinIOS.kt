@@ -1,8 +1,5 @@
 package co.touchlab.kampkit
 
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
-import co.touchlab.kampkit.db.KaMPKitDb
 import co.touchlab.kampkit.models.BreedViewModel
 import co.touchlab.kermit.Logger
 import com.russhwolf.settings.NSUserDefaultsSettings

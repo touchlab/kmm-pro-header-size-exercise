@@ -1,6 +1,7 @@
 package co.touchlab.kampkit.models
 
 import co.touchlab.kampkit.DatabaseHelper
+import co.touchlab.kampkit.db.Breed
 import co.touchlab.kampkit.ktor.DogApi
 import co.touchlab.kermit.Logger
 import com.russhwolf.settings.Settings
