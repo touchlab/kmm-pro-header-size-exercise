@@ -1,11 +1,11 @@
 package co.touchlab.kampkit.models
 
 import co.touchlab.kampkit.database.DatabaseHelper
-import co.touchlab.kampkit.db.Breed
 import co.touchlab.kampkit.ktor.DogApi
 import co.touchlab.kermit.Logger
 import com.russhwolf.settings.Settings
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Clock
 
 class BreedRepository(
@@ -21,7 +21,16 @@ class BreedRepository(
         internal const val DB_TIMESTAMP_KEY = "DbTimestampKey"
     }
 
-    fun getBreeds(): Flow<List<Breed>> = dbHelper.selectAllItems()
+    fun getBreeds(): Flow<List<BreedInfo>> =
+        dbHelper.selectAllItems().map { breeds ->
+            breeds.map {
+                BreedInfo(
+                    id = it.id,
+                    name = it.name,
+                    favorite = it.favorite,
+                )
+            }
+        }
 
     suspend fun refreshBreedsIfStale() {
         if (isBreedListStale()) {
@@ -41,7 +50,7 @@ class BreedRepository(
         }
     }
 
-    suspend fun updateBreedFavorite(breed: Breed) {
+    suspend fun updateBreedFavorite(breed: BreedInfo) {
         dbHelper.updateFavorite(breed.id, !breed.favorite)
     }
 

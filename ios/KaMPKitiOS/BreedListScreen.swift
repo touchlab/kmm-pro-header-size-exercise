@@ -56,7 +56,7 @@ struct BreedListScreen: View {
 
 struct BreedListContent: View {
     var state: BreedViewState
-    var onBreedFavorite: (Breed) -> Void
+    var onBreedFavorite: (BreedInfo) -> Void
     var refresh: () -> Void
 
     var body: some View {
@@ -92,7 +92,7 @@ struct BreedListContent: View {
 }
 
 struct BreedRowView: View {
-    var breed: Breed
+    var breed: BreedInfo
     var onTap: () -> Void
 
     var body: some View {
@@ -113,8 +113,8 @@ struct BreedListScreen_Previews: PreviewProvider {
         Group {
             BreedListContent(
                 state: .Content(breeds: [
-                    Breed(id: 0, name: "appenzeller", favorite: false),
-                    Breed(id: 1, name: "australian", favorite: true)
+                    BreedInfo(id: 0, name: "appenzeller", favorite: false),
+                    BreedInfo(id: 1, name: "australian", favorite: true)
                 ]),
                 onBreedFavorite: { _ in },
                 refresh: {}

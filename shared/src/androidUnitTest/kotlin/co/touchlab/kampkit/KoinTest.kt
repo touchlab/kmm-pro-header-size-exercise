@@ -16,7 +16,7 @@ import kotlin.test.Test
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [32])
-class KoinTest {
+internal class KoinTest {
     @Test
     fun checkAllModules() {
         initKoin(

@@ -2,9 +2,9 @@ package co.touchlab.kampkit
 
 import app.cash.turbine.test
 import co.touchlab.kampkit.database.DatabaseHelper
-import co.touchlab.kampkit.db.Breed
 import co.touchlab.kampkit.mock.ClockMock
 import co.touchlab.kampkit.mock.DogApiMock
+import co.touchlab.kampkit.models.BreedInfo
 import co.touchlab.kampkit.models.BreedRepository
 import co.touchlab.kermit.Logger
 import co.touchlab.kermit.StaticConfig
@@ -18,7 +18,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.time.Duration.Companion.hours
 
-class BreedRepositoryTest {
+internal class BreedRepositoryTest {
     private var kermit = Logger(StaticConfig())
     private var testDbConnection = testDbConnection()
     private var dbHelper =
@@ -37,9 +37,9 @@ class BreedRepositoryTest {
         BreedRepository(dbHelper, settings, ktorApi, kermit, clock)
 
     companion object {
-        private val appenzeller = Breed(1, "appenzeller", false)
-        private val australianNoLike = Breed(2, "australian", false)
-        private val australianLike = Breed(2, "australian", true)
+        private val appenzeller = BreedInfo(1, "appenzeller", false)
+        private val australianNoLike = BreedInfo(2, "australian", false)
+        private val australianLike = BreedInfo(2, "australian", true)
         private val breedsNoFavorite = listOf(appenzeller, australianNoLike)
         private val breedsFavorite = listOf(appenzeller, australianLike)
         private val breedNames = breedsFavorite.map { it.name }
@@ -80,7 +80,7 @@ class BreedRepositoryTest {
 
                 repository.refreshBreeds()
                 // id is 5 here because it incremented twice when trying to insert duplicate breeds
-                assertEquals(breedsFavorite + Breed(5, "extra", false), awaitItem())
+                assertEquals(breedsFavorite + BreedInfo(5, "extra", false), awaitItem())
             }
         }
 
@@ -105,7 +105,7 @@ class BreedRepositoryTest {
             repository.refreshBreedsIfStale()
             repository.getBreeds().test {
                 // id is 5 here because it incremented twice when trying to insert duplicate breeds
-                assertEquals(breedsFavorite + Breed(5, "extra", false), awaitItem())
+                assertEquals(breedsFavorite + BreedInfo(5, "extra", false), awaitItem())
             }
         }
 

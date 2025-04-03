@@ -18,7 +18,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class DogApiTest {
+internal class DogApiTest {
     private val emptyLogger =
         Logger(
             config =

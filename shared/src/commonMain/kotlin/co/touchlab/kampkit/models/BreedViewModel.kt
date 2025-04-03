@@ -1,6 +1,5 @@
 package co.touchlab.kampkit.models
 
-import co.touchlab.kampkit.db.Breed
 import co.touchlab.kermit.Logger
 import co.touchlab.skie.configuration.annotations.DefaultArgumentInterop
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -88,7 +87,7 @@ class BreedViewModel(
         }
     }
 
-    suspend fun updateBreedFavorite(breed: Breed) {
+    suspend fun updateBreedFavorite(breed: BreedInfo) {
         breedRepository.updateBreedFavorite(breed)
     }
 
@@ -128,7 +127,7 @@ sealed class BreedViewState {
     data class Content
         @DefaultArgumentInterop.Enabled
         constructor(
-            val breeds: List<Breed>,
+            val breeds: List<BreedInfo>,
             override val isLoading: Boolean = false,
         ) : BreedViewState()
 

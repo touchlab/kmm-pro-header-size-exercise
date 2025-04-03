@@ -1,76 +1,14 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.sqlDelight)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.android.library)
-}
-
-kotlin {
-    jvmToolchain(11)
-
-    androidTarget()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64(),
-    ).forEach {
-        it.binaries.framework {
-            baseName = "database"
-            isStatic = false
-            linkerOpts("-lsqlite3")
-        }
-    }
-
-    sourceSets {
-        commonMain.dependencies {
-            implementation(libs.sqlDelight.coroutinesExt)
-            implementation(libs.kotlinx.dateTime)
-            implementation(libs.multiplatformSettings.common)
-            implementation(libs.touchlab.kermit)
-            implementation(libs.coroutines.core)
-        }
-
-        commonTest.dependencies {
-            implementation(libs.coroutines.test)
-            implementation(libs.kotlin.test)
-            implementation(libs.turbine)
-            implementation(libs.multiplatformSettings.test)
-        }
-
-        androidMain.dependencies {
-            api(libs.sqlDelight.android)
-        }
-
-        androidUnitTest.dependencies {
-            implementation(libs.roboelectric)
-            implementation(libs.androidx.test.junit)
-            implementation(libs.sqlDelight.jvm)
-        }
-
-        iosMain.dependencies {
-            api(libs.sqlDelight.native)
-        }
-
-        iosTest.dependencies {
-            implementation(libs.coroutines.test)
-            implementation(libs.kotlin.test)
-            implementation(libs.turbine)
-            implementation(libs.sqlDelight.native)
-        }
-    }
-}
-
-sqldelight {
-    databases {
-        create("KaMPKitDb") {
-            packageName.set("co.touchlab.kampkit.db")
-        }
-    }
+    alias(libs.plugins.sqlDelight)
 }
 
 android {
-    namespace = "co.touchlab.kampkit.database"
+    namespace = "co.touchlab.kampkit.touchlab"
     compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
@@ -85,5 +23,59 @@ android {
     lint {
         warningsAsErrors = true
         abortOnError = true
+    }
+}
+
+version = "1.2"
+
+kotlin {
+    jvmToolchain(11)
+    // https://kotlinlang.org/docs/multiplatform-expect-actual.html#expected-and-actual-classes
+    // To suppress this warning about usage of expected and actual classes
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+    androidTarget {
+        @Suppress("OPT_IN_USAGE")
+        unitTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
+    }
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach {
+        it.binaries.framework {
+            isStatic = false
+            linkerOpts("-lsqlite3")
+            export(libs.touchlab.kermit.simple)
+        }
+    }
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.sqlDelight.coroutinesExt)
+            implementation(libs.touchlab.kermit)
+        }
+        commonTest.dependencies {
+            implementation(libs.bundles.shared.commonTest)
+        }
+        androidMain.dependencies {
+            implementation(libs.sqlDelight.android)
+        }
+        getByName("androidUnitTest").dependencies {
+            implementation(libs.bundles.shared.androidTest)
+        }
+        iosMain.dependencies {
+            implementation(libs.sqlDelight.native)
+            implementation(libs.touchlab.kermit.simple)
+            api(libs.touchlab.kermit.simple)
+        }
+    }
+}
+
+sqldelight {
+    databases.create("KaMPKitDb") {
+        packageName.set("co.touchlab.kampkit.db")
     }
 }

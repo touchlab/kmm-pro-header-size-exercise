@@ -10,7 +10,7 @@ import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-class SqlDelightTest {
+internal class SqlDelightTest {
     private lateinit var dbHelper: DatabaseHelper
 
     private suspend fun DatabaseHelper.insertBreed(name: String) {

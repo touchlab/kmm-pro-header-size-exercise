@@ -35,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kampkit.android.R
-import co.touchlab.kampkit.db.Breed
+import co.touchlab.kampkit.models.BreedInfo
 import co.touchlab.kampkit.models.BreedViewModel
 import co.touchlab.kampkit.models.BreedViewState
 import co.touchlab.kermit.Logger
@@ -67,9 +67,9 @@ fun MainScreen(
 fun MainScreenContent(
     dogsState: BreedViewState,
     onRefresh: () -> Unit = {},
-    onSuccess: (List<Breed>) -> Unit = {},
+    onSuccess: (List<BreedInfo>) -> Unit = {},
     onError: (String) -> Unit = {},
-    onFavorite: (Breed) -> Unit = {},
+    onFavorite: (BreedInfo) -> Unit = {},
 ) {
     Surface(
         color = MaterialTheme.colors.background,
@@ -136,16 +136,16 @@ fun Error(error: String) {
 
 @Composable
 fun Success(
-    successData: List<Breed>,
-    favoriteBreed: (Breed) -> Unit,
+    successData: List<BreedInfo>,
+    favoriteBreed: (BreedInfo) -> Unit,
 ) {
     DogList(breeds = successData, favoriteBreed)
 }
 
 @Composable
 fun DogList(
-    breeds: List<Breed>,
-    onItemClick: (Breed) -> Unit,
+    breeds: List<BreedInfo>,
+    onItemClick: (BreedInfo) -> Unit,
 ) {
     LazyColumn {
         items(breeds) { breed ->
@@ -159,8 +159,8 @@ fun DogList(
 
 @Composable
 fun DogRow(
-    breed: Breed,
-    onClick: (Breed) -> Unit,
+    breed: BreedInfo,
+    onClick: (BreedInfo) -> Unit,
 ) {
     Row(
         Modifier
@@ -173,7 +173,7 @@ fun DogRow(
 }
 
 @Composable
-fun FavoriteIcon(breed: Breed) {
+fun FavoriteIcon(breed: BreedInfo) {
     Crossfade(
         targetState = !breed.favorite,
         animationSpec =
@@ -205,8 +205,8 @@ fun MainScreenContentPreview_Success() {
             BreedViewState.Content(
                 breeds =
                     listOf(
-                        Breed(0, "appenzeller", false),
-                        Breed(1, "australian", true),
+                        BreedInfo(0, "appenzeller", false),
+                        BreedInfo(1, "australian", true),
                     ),
             ),
     )

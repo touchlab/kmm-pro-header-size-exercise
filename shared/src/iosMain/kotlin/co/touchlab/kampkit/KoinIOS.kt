@@ -28,7 +28,7 @@ fun initKoinIos(
         },
     )
 
-actual val platformModule =
+internal actual val platformModule =
     module {
         single<SqlDriver> { NativeSqliteDriver(KaMPKitDb.Schema, "KampkitDb") }
 

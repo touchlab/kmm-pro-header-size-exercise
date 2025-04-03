@@ -3,9 +3,9 @@ package co.touchlab.kampkit
 import app.cash.turbine.ReceiveTurbine
 import app.cash.turbine.test
 import co.touchlab.kampkit.database.DatabaseHelper
-import co.touchlab.kampkit.db.Breed
 import co.touchlab.kampkit.mock.ClockMock
 import co.touchlab.kampkit.mock.DogApiMock
+import co.touchlab.kampkit.models.BreedInfo
 import co.touchlab.kampkit.models.BreedRepository
 import co.touchlab.kampkit.models.BreedViewModel
 import co.touchlab.kampkit.models.BreedViewState
@@ -27,7 +27,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.hours
 
-class BreedViewModelTest {
+internal class BreedViewModelTest {
     private var kermit = Logger(StaticConfig())
     private var testDbConnection = testDbConnection()
     private var dbHelper =
@@ -52,9 +52,9 @@ class BreedViewModelTest {
     }
 
     companion object {
-        private val appenzeller = Breed(1, "appenzeller", false)
-        private val australianNoLike = Breed(2, "australian", false)
-        private val australianLike = Breed(2, "australian", true)
+        private val appenzeller = BreedInfo(1, "appenzeller", false)
+        private val australianNoLike = BreedInfo(2, "australian", false)
+        private val australianLike = BreedInfo(2, "australian", true)
         private val breedViewStateSuccessNoFavorite =
             BreedViewState.Content(
                 breeds = listOf(appenzeller, australianNoLike),
@@ -129,7 +129,7 @@ class BreedViewModelTest {
                 // id is 5 here because it incremented twice when trying to insert duplicate breeds
                 assertEquals(
                     BreedViewState.Content(
-                        breedViewStateSuccessFavorite.breeds + Breed(5, "extra", false),
+                        breedViewStateSuccessFavorite.breeds + BreedInfo(5, "extra", false),
                     ),
                     awaitItemPrecededBy(breedViewStateSuccessFavorite.copy(isLoading = true)),
                 )
@@ -158,7 +158,7 @@ class BreedViewModelTest {
                 // id is 5 here because it incremented twice when trying to insert duplicate breeds
                 assertEquals(
                     BreedViewState.Content(
-                        breedViewStateSuccessFavorite.breeds + Breed(5, "extra", false),
+                        breedViewStateSuccessFavorite.breeds + BreedInfo(5, "extra", false),
                     ),
                     awaitItemPrecededBy(BreedViewState.Initial, breedViewStateSuccessFavorite),
                 )

@@ -32,5 +32,6 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version("0.8.0")
 }
 
-include(":app", ":shared", ":database")
+include(":app", ":shared")
 rootProject.name = "KaMPKit"
+include(":database")

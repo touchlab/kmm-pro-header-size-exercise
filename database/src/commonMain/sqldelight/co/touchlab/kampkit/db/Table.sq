@@ -23,4 +23,4 @@ deleteAll:
 DELETE FROM Breed;
 
 updateFavorite:
-UPDATE Breed SET favorite = ? WHERE id = ?; 
+UPDATE Breed SET favorite = ? WHERE id = ?;
